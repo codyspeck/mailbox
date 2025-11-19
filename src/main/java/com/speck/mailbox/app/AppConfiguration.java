@@ -22,7 +22,6 @@ public class AppConfiguration {
     public List<MailboxOptions> mailboxOptionsList() {
         return List.of(
                 new MailboxOptions("inbox")
-                        .withRelayStrategy(RelayStrategy.Sequential)
                         .withBatchSize(1000)
                         .withMessageType(ProductCreated.class)
                         .withMessageType(ProductDelivered.class)

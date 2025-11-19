@@ -3,7 +3,6 @@ package com.speck.mailbox.lib.configuration;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class MailboxOptions {
 
@@ -11,12 +10,10 @@ public class MailboxOptions {
 
     private int batchSize;
     private List<Type> messagesTypes;
-    private RelayStrategy relayStrategy;
 
     public MailboxOptions(String table) {
         this.table = table;
         this.messagesTypes = new ArrayList<>();
-        this.relayStrategy = RelayStrategy.Sequential;
     }
 
     public String getTable() {
@@ -38,11 +35,6 @@ public class MailboxOptions {
 
     public MailboxOptions withMessageType(Type messageType) {
         messagesTypes.add(messageType);
-        return this;
-    }
-
-    public MailboxOptions withRelayStrategy(RelayStrategy relayStrategy) {
-        this.relayStrategy = relayStrategy;
         return this;
     }
 
