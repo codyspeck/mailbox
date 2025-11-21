@@ -6,10 +6,9 @@ import com.speck.mailbox.app.handlers.ProductShippedHandler;
 import com.speck.mailbox.app.messages.ProductCreated;
 import com.speck.mailbox.app.messages.ProductDelivered;
 import com.speck.mailbox.app.messages.ProductShipped;
-import com.speck.mailbox.lib.configuration.MessageHandlerOptions;
-import com.speck.mailbox.lib.configuration.MailboxOptions;
+import com.speck.mailbox.lib.configuration.MessageHandlerProperties;
+import com.speck.mailbox.lib.configuration.MailboxProperties;
 import com.speck.mailbox.lib.configuration.MessageTypeEntry;
-import com.speck.mailbox.lib.configuration.RelayStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,9 +18,9 @@ import java.util.List;
 public class AppConfiguration {
 
     @Bean
-    public List<MailboxOptions> mailboxOptionsList() {
+    public List<MailboxProperties> mailboxOptionsList() {
         return List.of(
-                new MailboxOptions("inbox")
+                new MailboxProperties("inbox")
                         .withBatchSize(1000)
                         .withMessageType(ProductCreated.class)
                         .withMessageType(ProductDelivered.class)
@@ -29,17 +28,17 @@ public class AppConfiguration {
     }
 
     @Bean
-    public List<MessageHandlerOptions> mailboxMessageHandlerOptionsList() {
+    public List<MessageHandlerProperties> mailboxMessageHandlerOptionsList() {
         return List.of(
-                new MessageHandlerOptions(ProductCreatedHandler.class, ProductCreated.class)
+                new MessageHandlerProperties(ProductCreatedHandler.class, ProductCreated.class)
                         .withBoundedCapacity(1000)
                         .withMaxDegreeOfParallelism(1000),
 
-                new MessageHandlerOptions(ProductDeliveredHandler.class, ProductDelivered.class)
+                new MessageHandlerProperties(ProductDeliveredHandler.class, ProductDelivered.class)
                         .withBoundedCapacity(1000)
                         .withMaxDegreeOfParallelism(1000),
 
-                new MessageHandlerOptions(ProductShippedHandler.class, ProductShipped.class)
+                new MessageHandlerProperties(ProductShippedHandler.class, ProductShipped.class)
                         .withBoundedCapacity(1000)
                         .withMaxDegreeOfParallelism(1000));
     }

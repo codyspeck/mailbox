@@ -1,28 +1,45 @@
 package com.speck.mailbox.lib.data.repositories;
 
 import com.speck.mailbox.lib.data.entities.Message;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class MessageDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public MessageDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public Message get(String table, long messageId) {
+        var sql = String.format(
+                """
+                SELECT m.id, m.payload, m.type, m.created_at, m.processed_at, m.locked_until
+                FROM %s m
+                WHERE id = ?
+                LIMIT 1
+                FOR UPDATE;
+                """,
+                table);
+
+        return jdbcTemplate
+                .query(sql, new BeanPropertyRowMapper<>(Message.class), messageId)
+                .getFirst();
     }
 
     public List<Message> get(String table, int count) {
         var sql = String.format(
                 """
-                SELECT m.id, m.payload, m.type
+                SELECT m.id, m.payload, m.type, m.created_at, m.processed_at, m.locked_until
                 FROM %s m
-                LIMIT ?;
+                LIMIT ?
+                FOR UPDATE SKIP LOCKED;
                 """,
                 table);
 
@@ -44,21 +61,30 @@ public class MessageDao {
                 mailboxMessage.getCreatedAt());
     }
 
-    public void setProcessedAt(String table, List<Message> messages) {
+    public void setLockedUntil(String table, Instant lockedUntil, List<Message> messages) {
         if (messages.isEmpty()) {
             return;
         }
 
         var sql = String.format(
                 """
-                UPDATE %s SET processed_at = ? WHERE id IN (?)
+                UPDATE %s SET locked_until = ? WHERE id IN (?);
                 """,
                 table);
 
         jdbcTemplate.update(
                 sql,
-                Instant.now(),
+                lockedUntil,
                 messages.stream().map(Message::getId).toList());
     }
 
+    public void setProcessedAt(String table, Instant processedAt, Message message) {
+        var sql = String.format(
+                """
+                UPDATE %s SET processed_at = ? WHERE id = ?;
+                """,
+                table);
+
+        jdbcTemplate.update(sql, processedAt, message.getId());
+    }
 }

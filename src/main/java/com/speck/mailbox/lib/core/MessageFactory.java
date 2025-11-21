@@ -17,12 +17,18 @@ public class MessageFactory {
         this.messageTypeRegistry = messageTypeRegistry;
     }
 
-    public Message create(Object payload) {
-        var message = new Message();
-        message.setPayload(messageSerializer.serialize(payload));
-        message.setType(messageTypeRegistry.getMessageTypeString(payload));
-        message.setCreatedAt(Date.from(Instant.now()));
-        return message;
+    public Object create(String message) {
+        return messageSerializer.deserialize(
+                message,
+                messageTypeRegistry.getMessageType(message));
+    }
+
+    public Message create(Object message) {
+        return Message.builder()
+                .payload(messageSerializer.serialize(message))
+                .type(messageTypeRegistry.getMessageTypeString(message))
+                .createdAt(Date.from(Instant.now()))
+                .build();
     }
 
 }
