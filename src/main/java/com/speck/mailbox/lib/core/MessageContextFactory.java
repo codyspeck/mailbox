@@ -10,7 +10,7 @@ public class MessageContextFactory {
     private final MessageSerializer messageSerializer;
     private final MessageTypeRegistry messageTypeRegistry;
 
-    public MessageContext create(Message message, String mailboxTable) {
+    public <TMessage> MessageContext<TMessage> create(Message message, String mailboxTable) {
         return MessageContext.builder()
                 .messageId(message.getId())
                 .mailboxTable(mailboxTable)

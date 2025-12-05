@@ -4,6 +4,6 @@ import java.lang.reflect.Type;
 
 public interface MessagePipelineRegistry {
 
-    MessagePipeline get(Type messageType);
+    MessagePipelineImpl get(Type messageType);
 
 }
