@@ -1,9 +1,7 @@
 package com.speck.mailbox.lib.core;
 
-import com.speck.mailbox.lib.data.Message;
-
 public interface MailboxTableRegistry {
 
-    String getMailboxTable(Message message);
+    String getMailboxTable(Object message);
 
 }
