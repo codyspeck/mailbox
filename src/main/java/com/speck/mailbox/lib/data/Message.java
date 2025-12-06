@@ -1,4 +1,4 @@
-package com.speck.mailbox.lib.data.entities;
+package com.speck.mailbox.lib.data;
 
 import lombok.Builder;
 import lombok.Getter;

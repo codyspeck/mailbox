@@ -1,7 +1,7 @@
 package com.speck.mailbox.lib.core;
 
 import com.speck.mailbox.lib.data.UnitOfWork;
-import com.speck.mailbox.lib.data.repositories.MessageDao;
+import com.speck.mailbox.lib.data.MessageDao;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;

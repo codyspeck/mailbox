@@ -1,14 +1,11 @@
-package com.speck.mailbox.lib.data.repositories;
+package com.speck.mailbox.lib.data;
 
-import com.speck.mailbox.lib.data.entities.Message;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 @Component
