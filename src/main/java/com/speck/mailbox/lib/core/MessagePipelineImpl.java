@@ -1,21 +1,20 @@
 package com.speck.mailbox.lib.core;
 
 import com.speck.mailbox.lib.data.UnitOfWork;
-import com.speck.mailbox.lib.data.entities.Message;
 import com.speck.mailbox.lib.data.repositories.MessageDao;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 
 @RequiredArgsConstructor
-public class MessagePipelineImpl<TMessage> {
+public class MessagePipelineImpl<TMessage> implements MessagePipeline {
 
     private final Class<TMessage> clazz;
     private final MessageDao messageDao;
     private final MessageHandler<TMessage> messageHandler;
     private final UnitOfWork unitOfWork;
 
-    public void send(Message message) {
+    public void send(MessageContext messageContext) {
         unitOfWork.executeInTransaction(() -> {
             var message = messageDao.get(
                     messageContext.getMailboxTable(),
@@ -25,7 +24,7 @@ public class MessagePipelineImpl<TMessage> {
                 return;
             }
 
-            messageHandler.handle(messageContext.getMessage());
+            messageHandler.handle(clazz.cast(messageContext.getMessage()));
 
             messageDao.setProcessedAt(
                     messageContext.getMailboxTable(),

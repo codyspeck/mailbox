@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class MessageContext<TMessage> {
+public class MessageContext {
 
     private final long messageId;
     private final String mailboxTable;
-    private final TMessage message;
+    private final Object message;
 
 }

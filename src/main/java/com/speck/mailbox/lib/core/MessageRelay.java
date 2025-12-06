@@ -36,7 +36,7 @@ public class MessageRelay implements Runnable {
                     messageRelayConfiguration.mailboxTable());
 
             messagePipelineRegistry
-                    .get(messageContext.getMessage().getClass())
+                    .get(messageContext.getMessage())
                     .send(messageContext);
         }
     }
