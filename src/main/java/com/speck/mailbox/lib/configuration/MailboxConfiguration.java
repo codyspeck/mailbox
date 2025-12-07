@@ -33,8 +33,8 @@ public class MailboxConfiguration {
                 messageTypeEntries
                         .stream()
                         .collect(Collectors.toMap(
-                                MessageTypeEntry::getMessageTypeString,
-                                MessageTypeEntry::getMessageType)));
+                                MessageTypeEntry::getMessageType,
+                                MessageTypeEntry::getMessageClass)));
     }
 
 }

@@ -16,7 +16,7 @@ public class MessageFactory {
     public Message createMessage(Object message) {
         return Message.builder()
                 .payload(messageSerializer.serialize(message))
-                .type(messageTypeRegistry.getMessageTypeString(message))
+                .type(messageTypeRegistry.getMessageType(message))
                 .createdAt(new Date())
                 .build();
     }

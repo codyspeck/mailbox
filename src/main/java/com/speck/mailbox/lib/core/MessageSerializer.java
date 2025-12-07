@@ -9,7 +9,7 @@ public class MessageSerializer {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public Object deserialize(String message, Class clazz) {
+    public Object deserialize(String message, Class<?> clazz) {
         try {
             return objectMapper.readValue(message, clazz);
         } catch (JsonProcessingException e) {

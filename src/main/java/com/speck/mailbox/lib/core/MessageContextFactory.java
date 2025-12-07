@@ -15,7 +15,7 @@ public class MessageContextFactory {
                 .mailboxTable(mailboxTable)
                 .message(messageSerializer.deserialize(
                         message.getPayload(),
-                        messageTypeRegistry.getMessageType(message.getType())))
+                        messageTypeRegistry.getMessageClass(message.getType())))
                 .build();
     }
 

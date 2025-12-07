@@ -1,23 +1,13 @@
 package com.speck.mailbox.lib.configuration;
 
-import java.lang.reflect.Type;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
+@Getter
+@RequiredArgsConstructor
 public class MessageTypeEntry {
 
-    private final String messageTypeString;
-    private final Type messageType;
-
-    public MessageTypeEntry(String messageTypeString, Type messageType) {
-        this.messageTypeString = messageTypeString;
-        this.messageType = messageType;
-    }
-
-    public String getMessageTypeString() {
-        return messageTypeString;
-    }
-
-    public Type getMessageType() {
-        return messageType;
-    }
+    private final String messageType;
+    private final Class<?> messageClass;
 
 }
