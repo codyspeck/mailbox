@@ -3,9 +3,12 @@ package com.speck.mailbox.lib.data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -13,6 +16,7 @@ import java.util.List;
 public class MessageDao {
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public Message get(String table, long messageId) {
         var sql = String.format(
@@ -65,14 +69,15 @@ public class MessageDao {
 
         var sql = String.format(
                 """
-                UPDATE %s SET locked_until = ? WHERE id IN (?);
+                UPDATE %s SET locked_until = :lockedUntil WHERE id IN (:ids);
                 """,
                 table);
 
-        jdbcTemplate.update(
-                sql,
-                lockedUntil,
-                messages.stream().map(Message::getId).toList());
+        var parameters = new MapSqlParameterSource()
+                .addValue("lockedUntil", lockedUntil)
+                .addValue("ids", messages.stream().map(Message::getId).toList());
+
+        namedParameterJdbcTemplate.update(sql, parameters);
     }
 
     public void setProcessedAt(String table, Instant processedAt, Message message) {

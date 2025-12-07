@@ -3,7 +3,6 @@ package com.speck.mailbox.lib.configuration;
 import com.speck.mailbox.lib.core.*;
 import com.speck.mailbox.lib.data.MessageDao;
 import com.speck.mailbox.lib.data.UnitOfWork;
-import org.springframework.boot.task.ThreadPoolTaskSchedulerBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -61,9 +60,9 @@ public class MailboxConfiguration {
             MessagePipelineRegistry messagePipelineRegistry,
             UnitOfWork unitOfWork) {
 
-        var scheduler = new ThreadPoolTaskSchedulerBuilder()
-                .poolSize(mailboxPropertiesList.size())
-                .build();
+        var scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(mailboxPropertiesList.size());
+        scheduler.initialize();
 
         for (var mailboxProperties : mailboxPropertiesList) {
             var messageRelayConfiguration = new MessageRelayConfiguration(

@@ -2,7 +2,9 @@ package com.speck.mailbox.app.handlers;
 
 import com.speck.mailbox.app.messages.ProductCreated;
 import com.speck.mailbox.lib.core.MessageHandler;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductCreatedHandler implements MessageHandler<ProductCreated> {
 
     @Override
