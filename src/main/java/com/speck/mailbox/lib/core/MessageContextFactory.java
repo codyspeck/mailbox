@@ -2,7 +2,9 @@ package com.speck.mailbox.lib.core;
 
 import com.speck.mailbox.lib.data.Message;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class MessageContextFactory {
 

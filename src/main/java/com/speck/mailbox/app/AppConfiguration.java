@@ -11,6 +11,7 @@ import com.speck.mailbox.lib.configuration.MailboxProperties;
 import com.speck.mailbox.lib.configuration.MessageTypeEntry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.List;
 

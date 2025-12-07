@@ -15,7 +15,6 @@ public class MessageRelay implements Runnable {
     private final MessagePipelineRegistry messagePipelineRegistry;
     private final UnitOfWork unitOfWork;
 
-    @Override
     public void run() {
         var messages = unitOfWork.executeInTransaction(() -> {
             var innerMessages = messageDao.get(
