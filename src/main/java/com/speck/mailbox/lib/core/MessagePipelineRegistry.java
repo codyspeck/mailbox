@@ -1,7 +1,16 @@
 package com.speck.mailbox.lib.core;
 
-public interface MessagePipelineRegistry {
+import lombok.RequiredArgsConstructor;
 
-    MessagePipeline get(Object message);
+import java.util.Map;
+
+@RequiredArgsConstructor
+public class MessagePipelineRegistry {
+
+    private final Map<Class<?>, MessagePipeline> messagePipelines;
+
+    public MessagePipeline get(Object message) {
+        return messagePipelines.get(message.getClass());
+    }
 
 }

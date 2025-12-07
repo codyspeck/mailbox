@@ -2,17 +2,15 @@ package com.speck.mailbox.lib.configuration;
 
 import lombok.Getter;
 
-import java.lang.reflect.Type;
-
 @Getter
 public class MessageHandlerProperties {
 
-    private final Type mailboxMessageHandlerType;
-    private final Type mailboxMessageType;
+    private final Class<?> mailboxMessageHandlerType;
+    private final Class<?> mailboxMessageType;
     private int boundedCapacity;
     private int maxDegreeOfParallelism;
 
-    public MessageHandlerProperties(Type mailboxMessageHandlerType, Type mailboxMessageType) {
+    public MessageHandlerProperties(Class<?> mailboxMessageHandlerType, Class<?> mailboxMessageType) {
         this.mailboxMessageHandlerType = mailboxMessageHandlerType;
         this.mailboxMessageType = mailboxMessageType;
     }
