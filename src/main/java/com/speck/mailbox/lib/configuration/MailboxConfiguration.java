@@ -1,14 +1,12 @@
 package com.speck.mailbox.lib.configuration;
 
 import com.speck.mailbox.lib.core.MailboxTableRegistry;
-import com.speck.mailbox.lib.core.MessageTypeRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 public class MailboxConfiguration {
@@ -25,16 +23,6 @@ public class MailboxConfiguration {
         }
 
         return new MailboxTableRegistry(mailboxTables);
-    }
-
-    @Bean
-    public MessageTypeRegistry getMessageTypeRegistry(List<MessageTypeEntry> messageTypeEntries) {
-        return new MessageTypeRegistry(
-                messageTypeEntries
-                        .stream()
-                        .collect(Collectors.toMap(
-                                MessageTypeEntry::getMessageType,
-                                MessageTypeEntry::getMessageClass)));
     }
 
 }

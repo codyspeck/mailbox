@@ -1,8 +1,10 @@
 package com.speck.mailbox.lib.core;
 
+import com.speck.mailbox.lib.configuration.MessageTypeEntry;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -12,11 +14,14 @@ public class MessageTypeRegistry {
     private final Map<String, Class<?>> messageClasses;
     private final Map<Type, String> messageTypes;
 
-    public MessageTypeRegistry(Map<String, Class<?>> messageClasses) {
-        this.messageClasses = messageClasses;
-        this.messageTypes = messageClasses.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+    public MessageTypeRegistry(List<MessageTypeEntry> messageTypeEntries) {
+        this.messageClasses = messageTypeEntries.stream().collect(Collectors.toMap(
+                MessageTypeEntry::getMessageType,
+                MessageTypeEntry::getMessageClass));
+
+        this.messageTypes = messageTypeEntries.stream().collect(Collectors.toMap(
+                MessageTypeEntry::getMessageClass,
+                MessageTypeEntry::getMessageType));
     }
 
     public Class<?> getMessageClass(String messageType) {
