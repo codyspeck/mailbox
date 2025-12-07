@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 
 @Component
