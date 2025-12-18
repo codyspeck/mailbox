@@ -19,3 +19,12 @@ create table outbox (
     locked_until datetime     null
 );
 ```
+
+## Roadmap
+
+- Support queueing in `MessagePipelineImpl`
+- Support backpressure in `MessagePipelineImpl`
+- Support parallelism in `MessagePipelineImpl` 
+- Support batch message handling
+- Support message key for deduplication
+- Support archiving (deleting) old messages
